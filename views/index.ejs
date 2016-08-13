@@ -23,6 +23,11 @@
 					<a class="navbar-brand" href="/" id="main_logo">Buddy Finder</a>
 				</div>
 				<div id="main-navbar" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<% if(user) { %>
+							<li><a href="/logout">Logout</a></li>
+						<% } %>
+					</ul>
 				</div>
 			</div>
 		</nav>
