@@ -50,11 +50,6 @@ module.exports = function(app, passport) {
 
 	app.post("/", function(req, res, next) {
 		if (!req.isAuthenticated()) return res.render("index", { user: null });
-		if (!req.body.id) return res.render("index", { user: req.user, error: "Please add a class ID" });
-		if (!req.body.day) return res.render("index", { user: req.user, error: "Please add a day of week" });
-		if (!req.body.start_time) return res.render("index", { user: req.user, error: "Please add a start time" });
-		if (!req.body.end_time) return res.render("index", { user: req.user, error: "Please add a end time" });
-		if (!req.body.location) return res.render("index", { user: req.user, error: "Please add a location" });
 
 		var c;
 		(function(callback) {
@@ -62,6 +57,11 @@ module.exports = function(app, passport) {
 				if (c)
 					return callback(c);
 				else {
+					if (!req.body.id) return res.render("index", { user: req.user, error: "Please add a class ID" });
+					if (!req.body.day) return res.render("index", { user: req.user, error: "Please add a day of week" });
+					if (!req.body.start_time) return res.render("index", { user: req.user, error: "Please add a start time" });
+					if (!req.body.end_time) return res.render("index", { user: req.user, error: "Please add a end time" });
+					if (!req.body.location) return res.render("index", { user: req.user, error: "Please add a location" });
 					var newClass = new Class();
 					newClass.id = req.body.id;
 					newClass.day = req.body.day;
