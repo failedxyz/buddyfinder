@@ -1,0 +1,161 @@
+<html>
+	<head>
+		<title>Buddy Finder</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" integrity="sha384-+ENW/yibaokMnme+vBLnHMphUYxHs34h9lpdbSLuAwGkOKFRl4C34WkjazBtb7eT" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.3/css/bootstrap-select.css" integrity="sha384-X6BCz/5YN8CudtAN21w+htVJP5lJNqXP0VBfbGzrX7A/FhjpPIoMtiRRHxRYiKU6" crossorigin="anonymous">
+		<style>
+			.col-xs-5ths, .col-sm-5ths, .col-md-5ths, .col-lg-5ths { position: relative; min-height: 1px; padding-right: 10px; padding-left: 10px; } .col-xs-5ths { width: 20%; float: left; } @media (min-width: 768px) { .col-sm-5ths { width: 20%; float: left; } } @media (min-width: 992px) { .col-md-5ths { width: 20%; float: left; } } @media (min-width: 1200px) { .col-lg-5ths { width: 20%; float: left; } }
+		</style>
+		<script src="https://code.jquery.com/jquery-2.1.4.min.js" integrity="sha384-R4/ztc4ZlRqWjqIuvf6RX5yb/v90qNGx6fS48N0tRxiGkqveZETq72KgDVJCp2TC" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.3/js/bootstrap-select.min.js" integrity="sha384-1qZEXZBmj54fSiiWT8bZQGEpCumJWDrAoEqMdg6N5bTTLCkU5RXoNeUsKWekRYob" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<nav class="navbar navbar-default">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/" id="main_logo">Buddy Finder</a>
+				</div>
+				<div id="main-navbar" class="navbar-collapse collapse">
+				</div>
+			</div>
+		</nav>
+		<div class="container">
+			<% if(user) { %>
+				<div class="page-header">
+					<h1>Hi, <%- user.facebook.name %>!</h1>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="well">
+							<form action="/" method="POST">
+								<fieldset>
+									<legend>Class Details</legend>
+									<% if (locals.error) { %>
+										<div class="alert alert-danger"><%- error %></div>
+									<% } %>
+									<% if (locals.message) { %>
+										<div class="alert alert-info"><%- message %></div>
+									<% } %>
+									<div class="row">
+										<div class="col-sm-12 form-group">
+											<label class="col-sm-12" for="id"><small>Day of Week</small></label>
+											<div class="col-sm-12">
+												<select name="day" id="day" class="selectpicker" data-width="100%">
+													<option value="Monday">Monday</option>
+													<option value="Tuesday">Tuesday</option>
+													<option value="Wednesday">Wednesday</option>
+													<option value="Thursday">Thursday</option>
+													<option value="Friday">Friday</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12 form-group">
+											<label class="col-sm-12" for="id"><small>Class ID</small></label>
+											<div class="col-sm-12">
+												<input class="form-control" action="search" type="text" required name="id" id="id" placeholder="ex. CSE 1001-016" autocomplete="off" />
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12 form-group">
+											<label class="col-sm-12" for="start_time"><small>Start Time</small></label>
+											<div class="col-sm-12">
+												<input class="form-control" action="search" type="text" required name="start_time" id="start_time" placeholder="ex. 4:40PM" autocomplete="off" />
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12 form-group">
+											<label class="col-sm-12" for="end_time"><small>End Time</small></label>
+											<div class="col-sm-12">
+												<input class="form-control" action="search" type="text" required name="end_time" id="end_time" placeholder="ex. 5:30PM" autocomplete="off" />
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12 form-group">
+											<label class="col-sm-12" for="location"><small>Location</small></label>
+											<div class="col-sm-12">
+												<input class="form-control" action="search" type="text" required name="location" id="location" placeholder="ex. Kenneth H Keller Hall" autocomplete="off" />
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12 form-group">
+											<label class="col-sm-12" for="populate"><small>Pick Existing Class</small></label>
+											<div class="col-sm-12">
+												<select id="populate" name="cid" class="selectpicker" data-width="100%" style="max-width:100%; display:none;">
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12 form-group">
+											<center>
+												<input type="submit" class="btn btn-success" value="Add Class" />
+											</center>
+										</div>
+									</div>
+								</fieldset>
+							</form>
+						</div>
+					</div>
+					<div class="col-md-8">
+						<table class="table" style="table-layout: fixed;">
+							<thead>
+								<tr>
+									<th>Monday</th>
+									<th>Tuesday</th>
+									<th>Wednesday</th>
+									<th>Thursday</th>
+									<th>Friday</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<%- user %>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<script type="text/javascript">
+					var documents;
+					function populate() {
+						$("#populate").html(documents.map(function(item) {
+							return "<option value='" + item.id + "'>" + item.to_string + "</option>";
+						}).join(""));
+						$("#populate").selectpicker("refresh");
+					}
+					function handler() {
+						var words = [$("#day").val(), $("#id").val(), $("#start_time").val(), $("#end_time").val()].join(" ").trim();
+						$.post("/search", { words: words }, function(result) {
+							documents = result;
+							populate();
+						});
+					}
+					$("input[action=search],#day").change(handler);
+					// $("input[action=search]").keyup(handler);
+				</script>
+			<% } else { %>
+				<div class="jumbotron">
+					<center>
+						<h1>Welcome to BuddyFinder!</h1>
+						<a href="/auth" class="btn btn-large btn-primary">Login with Facebook</a>
+					</center>
+				</div>
+			<% } %>
+		</div>
+	</body>
+</html>
