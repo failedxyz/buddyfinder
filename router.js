@@ -53,7 +53,7 @@ module.exports = function(app, passport) {
 
 		var c;
 		(function(callback) {
-			Class.findOne({ id: req.body.cid }, function(err, c) {
+			Class.findOne({ id: $in: [req.body.cid, req.body.id] }, function(err, c) {
 				if (c)
 					return callback(c);
 				else {
