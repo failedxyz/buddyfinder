@@ -26,162 +26,169 @@
 				</div>
 			</div>
 		</nav>
-		<div class="container">
-			<% if(user) { %>
-				<div class="page-header">
-					<h1>Hi, <%- user.facebook.name %>!</h1>
+		<div style="min-height: 90vh;">
+			<div class="container">
+				<% if(user) { %>
+					<div class="page-header">
+						<h1>Hi, <%- user.facebook.name %>!</h1>
+					</div>
 				</div>
-			</div>
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-md-3">
-						<div class="well">
-							<form action="/" method="POST">
-								<fieldset>
-									<legend>Class Details</legend>
-									<% if (locals.error) { %>
-										<div class="alert alert-danger"><%- error %></div>
-									<% } %>
-									<% if (locals.message && locals.message.length > 0) { %>
-										<div class="alert alert-info"><%- message %></div>
-									<% } %>
-									<div class="row">
-										<div class="col-sm-12 form-group">
-											<label class="col-sm-12" for="id"><small>Day of Week</small></label>
-											<div class="col-sm-12">
-												<select name="day" id="day" class="selectpicker" data-width="100%">
-													<option value="Monday">Monday</option>
-													<option value="Tuesday">Tuesday</option>
-													<option value="Wednesday">Wednesday</option>
-													<option value="Thursday">Thursday</option>
-													<option value="Friday">Friday</option>
-												</select>
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-3">
+							<div class="well">
+								<form action="/" method="POST">
+									<fieldset>
+										<legend>Class Details</legend>
+										<% if (locals.error) { %>
+											<div class="alert alert-danger"><%- error %></div>
+										<% } %>
+										<% if (locals.message && locals.message.length > 0) { %>
+											<div class="alert alert-info"><%- message %></div>
+										<% } %>
+										<div class="row">
+											<div class="col-sm-12 form-group">
+												<label class="col-sm-12" for="id"><small>Day of Week</small></label>
+												<div class="col-sm-12">
+													<select name="day" id="day" class="selectpicker" data-width="100%">
+														<option value="Monday">Monday</option>
+														<option value="Tuesday">Tuesday</option>
+														<option value="Wednesday">Wednesday</option>
+														<option value="Thursday">Thursday</option>
+														<option value="Friday">Friday</option>
+													</select>
+												</div>
 											</div>
 										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12 form-group">
-											<label class="col-sm-12" for="id"><small>Class ID</small></label>
-											<div class="col-sm-12">
-												<input class="form-control" action="search" type="text" name="id" id="id" placeholder="ex. CSE 1001-016" autocomplete="off" />
+										<div class="row">
+											<div class="col-sm-12 form-group">
+												<label class="col-sm-12" for="id"><small>Class ID</small></label>
+												<div class="col-sm-12">
+													<input class="form-control" action="search" type="text" name="id" id="id" placeholder="ex. CSE 1001-016" autocomplete="off" />
+												</div>
 											</div>
 										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12 form-group">
-											<label class="col-sm-12" for="start_time"><small>Start Time</small></label>
-											<div class="col-sm-12">
-												<input class="form-control" action="search" type="text" name="start_time" id="start_time" placeholder="ex. 4:40pm" autocomplete="off" />
+										<div class="row">
+											<div class="col-sm-12 form-group">
+												<label class="col-sm-12" for="start_time"><small>Start Time</small></label>
+												<div class="col-sm-12">
+													<input class="form-control" action="search" type="text" name="start_time" id="start_time" placeholder="ex. 4:40pm" autocomplete="off" />
+												</div>
 											</div>
 										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12 form-group">
-											<label class="col-sm-12" for="end_time"><small>End Time</small></label>
-											<div class="col-sm-12">
-												<input class="form-control" action="search" type="text" name="end_time" id="end_time" placeholder="ex. 5:30pm" autocomplete="off" />
+										<div class="row">
+											<div class="col-sm-12 form-group">
+												<label class="col-sm-12" for="end_time"><small>End Time</small></label>
+												<div class="col-sm-12">
+													<input class="form-control" action="search" type="text" name="end_time" id="end_time" placeholder="ex. 5:30pm" autocomplete="off" />
+												</div>
 											</div>
 										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12 form-group">
-											<label class="col-sm-12" for="location"><small>Location</small></label>
-											<div class="col-sm-12">
-												<input class="form-control" action="search" type="text" name="location" id="location" placeholder="ex. Kenneth H Keller Hall" autocomplete="off" />
+										<div class="row">
+											<div class="col-sm-12 form-group">
+												<label class="col-sm-12" for="location"><small>Location</small></label>
+												<div class="col-sm-12">
+													<input class="form-control" action="search" type="text" name="location" id="location" placeholder="ex. Kenneth H Keller Hall" autocomplete="off" />
+												</div>
 											</div>
 										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12 form-group">
-											<label class="col-sm-12" for="populate"><small>Pick Existing Class</small></label>
-											<div class="col-sm-12">
-												<select id="populate" name="cid" class="selectpicker" data-width="100%" style="max-width:100%; display:none;">
-													<option value="">Create New Class</option>
-												</select>
+										<div class="row">
+											<div class="col-sm-12 form-group">
+												<label class="col-sm-12" for="populate"><small>Pick Existing Class</small></label>
+												<div class="col-sm-12">
+													<select id="populate" name="cid" class="selectpicker" data-width="100%" style="max-width:100%; display:none;">
+														<option value="">Create New Class</option>
+													</select>
+												</div>
 											</div>
 										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12 form-group">
-											<center>
-												<input type="submit" class="btn btn-success" value="Add Class" />
-											</center>
+										<div class="row">
+											<div class="col-sm-12 form-group">
+												<center>
+													<input type="submit" class="btn btn-success" value="Add Class" />
+												</center>
+											</div>
 										</div>
-									</div>
-								</fieldset>
-							</form>
+									</fieldset>
+								</form>
+							</div>
+						</div>
+						<% var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]; %>
+						<div class="col-md-9">
+							<table class="table" style="table-layout: fixed;">
+								<thead>
+									<tr>
+										<th>Monday</th>
+										<th>Tuesday</th>
+										<th>Wednesday</th>
+										<th>Thursday</th>
+										<th>Friday</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<% for (var d = 0; d < 5; d += 1) { %>
+											<td>
+											<% for (var i = 0; i < user.classList.length; i++) { %>
+												<% var _class = user.classList[i]; if (_class.day == days[d]) { %>
+													<div class="well">
+														<b><%- _class.id %></b>
+														<br />
+														<small><i><%- _class.start_time %> - <%- _class.end_time %></i></small>
+														<br />
+														<%- _class.location %>
+														<% if (_class.members) { %>
+															<br />
+															<small><a href="#members<%- _class._id %>" data-toggle="collapse"><%- _class.members.length %> member<%- _class.members.length == 1 ? "" : "s" %></a></small>
+															<div id="members<%- _class._id %>" class="collapse alert alert-info">
+																<% for (var j=0; j<_class.members.length; j++) { %>
+																	<% if (j != 0) { %><br /><% } %>
+																	<a target="_blank" href="https://facebook.com/app_scoped_user_id/<%- _class.members[j].id %>" style="color:#FFF;"><%- _class.members[j].name %></a>
+																<% } %>
+															</div>
+														<% } %>
+													</div>
+												<% } %>
+											<% } %>
+											</td>
+										<% } %>
+									</tr>
+								</tbody>
+							</table>
 						</div>
 					</div>
-					<% var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]; %>
-					<div class="col-md-9">
-						<table class="table" style="table-layout: fixed;">
-							<thead>
-								<tr>
-									<th>Monday</th>
-									<th>Tuesday</th>
-									<th>Wednesday</th>
-									<th>Thursday</th>
-									<th>Friday</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<% for (var d = 0; d < 5; d += 1) { %>
-										<td>
-										<% for (var i = 0; i < user.classList.length; i++) { %>
-											<% var _class = user.classList[i]; if (_class.day == days[d]) { %>
-												<div class="well">
-													<b><%- _class.id %></b>
-													<br />
-													<small><i><%- _class.start_time %> - <%- _class.end_time %></i></small>
-													<br />
-													<%- _class.location %>
-													<% if (_class.members) { %>
-														<br />
-														<small><a href="#members<%- _class._id %>" data-toggle="collapse"><%- _class.members.length %> member<%- _class.members.length == 1 ? "" : "s" %></a></small>
-														<div id="members<%- _class._id %>" class="collapse alert alert-info">
-															<% for (var j=0; j<_class.members.length; j++) { %>
-																<% if (j != 0) { %><br /><% } %>
-																<a target="_blank" href="https://facebook.com/app_scoped_user_id/<%- _class.members[j].id %>" style="color:#FFF;"><%- _class.members[j].name %></a>
-															<% } %>
-														</div>
-													<% } %>
-												</div>
-											<% } %>
-										<% } %>
-										</td>
-									<% } %>
-								</tr>
-							</tbody>
-						</table>
+					<script type="text/javascript">
+						var documents;
+						function populate() {
+							$("#populate").html("<option value=''>Create New Class</option>" + documents.map(function(item) {
+								return "<option value='" + item.id + "'>" + item.to_string + "</option>";
+							}).join(""));
+							$("#populate").selectpicker("refresh");
+						}
+						function handler() {
+							var words = [$("#day").val(), $("#id").val(), $("#start_time").val(), $("#end_time").val()].join(" ").trim();
+							$.post("/search", { words: words }, function(result) {
+								documents = result;
+								populate();
+							});
+						}
+						$("input[action=search],#day").change(handler);
+						// $("input[action=search]").keyup(handler);
+					</script>
+				<% } else { %>
+					<div class="jumbotron">
+						<center>
+							<h1>Welcome to BuddyFinder!</h1>
+							<a href="/auth" class="btn btn-large btn-primary">Login with Facebook</a>
+						</center>
 					</div>
-				</div>
-				<script type="text/javascript">
-					var documents;
-					function populate() {
-						$("#populate").html("<option value=''>Create New Class</option>" + documents.map(function(item) {
-							return "<option value='" + item.id + "'>" + item.to_string + "</option>";
-						}).join(""));
-						$("#populate").selectpicker("refresh");
-					}
-					function handler() {
-						var words = [$("#day").val(), $("#id").val(), $("#start_time").val(), $("#end_time").val()].join(" ").trim();
-						$.post("/search", { words: words }, function(result) {
-							documents = result;
-							populate();
-						});
-					}
-					$("input[action=search],#day").change(handler);
-					// $("input[action=search]").keyup(handler);
-				</script>
-			<% } else { %>
-				<div class="jumbotron">
-					<center>
-						<h1>Welcome to BuddyFinder!</h1>
-						<a href="/auth" class="btn btn-large btn-primary">Login with Facebook</a>
-					</center>
-				</div>
-			<% } %>
+				<% } %>
+			</div>
+		</div>
+		<div>
+			<center>
+				<a href="https://github.com/failedxyz/buddyfinder" target="_blank">Source</a> - <a href="https://github.com/failedxyz/buddyfinder/issues" target="_blank">Report Issues</a>
+			</center>
 		</div>
 	</body>
 </html>
