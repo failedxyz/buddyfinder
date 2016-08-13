@@ -9,7 +9,6 @@ const mongoose = require("mongoose");
 const morgan = require("morgan");
 const passport = require("passport");
 const session = require("express-session");
-const socketIO = require("socket.io");
 
 const common = require("./common");
 const config = require("./config");

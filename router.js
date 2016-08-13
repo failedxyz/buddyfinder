@@ -5,10 +5,35 @@ function escape(str) {
     return str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
 }
 
+function updateCount(user, callback) {
+	User.find({}, function(err, users) {
+		(function next(i) {
+			if (i == user.classList.length) {
+				callback(user);
+			} else {
+				var id = user.classList[i].id;
+				var members = [];
+				for (var j=0; j<users.length; j++) {
+					if (users[j].classList.map(function(item) {return item.id;}).indexOf(id) >= 0) {
+						members.push({
+							name: users[j].facebook.name,
+							id: users[j].facebook.id
+						});
+					}
+				}
+				user.classList[i].members = members;
+				next(i + 1);
+			}
+		})(0);
+	});
+}
+
 module.exports = function(app, passport) {
 	app.get("/", function(req, res, next) {
 		if (req.isAuthenticated()) {
-			res.render("index", { "user": req.user });
+			updateCount(req.user, function(user) {
+				res.render("index", { "user": user, "message": req.flash("message") });
+			});
 		} else {
 			res.render("index", { "user": null, "message": req.flash("authMessage") });
 		}
@@ -51,10 +76,12 @@ module.exports = function(app, passport) {
 			});
 		})(function(_class) {
 			var currentUser = User.findById(req.user.id, function(err, user) {
-				if (user.classList.indexOf(_class.id) >= 0) return res.render("index", { user: req.user, error: "You already have this class added." });
-				console.log({ "facebook.id": req.user.facebook.id }, { $push: { classList: _class.id } });
-				User.update({ "facebook.id": req.user.facebook.id }, { $push: { classList: _class.id } }, function(err) {
-					res.render("index", { user: req.user, message: "Success!" });
+				if (user.classList.map(function(item) { return item.id; }).indexOf(_class.id) >= 0) return res.render("index", { user: req.user, error: "You already have this class added." });
+				delete _class._id;
+				delete _class.__v;
+				User.update({ "facebook.id": req.user.facebook.id }, { $push: { classList: _class } }, function(err) {
+					req.flash("message", "Success!");
+					res.redirect("/");
 				});
 			});
 		});

@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 var bcrypt = require("bcrypt-nodejs");
+var Class = require("./class");
 
 var userSchema = mongoose.Schema({
 	"facebook": {
@@ -8,7 +9,7 @@ var userSchema = mongoose.Schema({
 		"email": String,
 		"name": String
 	},
-	"classList": [String]
+	"classList": Array
 });
 
 userSchema.methods.validPassword = function(password) {
@@ -21,10 +22,6 @@ userSchema.methods.hashPassword = function(password) {
 		if (err) return next(err);
 		user.local.password = hash;
 	});
-};
-
-userSchema.methods.getClassList = function(callback) {
-	
 };
 
 module.exports = mongoose.model("User", userSchema);

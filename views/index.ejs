@@ -31,8 +31,10 @@
 				<div class="page-header">
 					<h1>Hi, <%- user.facebook.name %>!</h1>
 				</div>
+			</div>
+			<div class="container-fluid">
 				<div class="row">
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<div class="well">
 							<form action="/" method="POST">
 								<fieldset>
@@ -40,7 +42,7 @@
 									<% if (locals.error) { %>
 										<div class="alert alert-danger"><%- error %></div>
 									<% } %>
-									<% if (locals.message) { %>
+									<% if (locals.message && locals.message.length > 0) { %>
 										<div class="alert alert-info"><%- message %></div>
 									<% } %>
 									<div class="row">
@@ -61,7 +63,7 @@
 										<div class="col-sm-12 form-group">
 											<label class="col-sm-12" for="id"><small>Class ID</small></label>
 											<div class="col-sm-12">
-												<input class="form-control" action="search" type="text" required name="id" id="id" placeholder="ex. CSE 1001-016" autocomplete="off" />
+												<input class="form-control" action="search" type="text" name="id" id="id" placeholder="ex. CSE 1001-016" autocomplete="off" />
 											</div>
 										</div>
 									</div>
@@ -69,7 +71,7 @@
 										<div class="col-sm-12 form-group">
 											<label class="col-sm-12" for="start_time"><small>Start Time</small></label>
 											<div class="col-sm-12">
-												<input class="form-control" action="search" type="text" required name="start_time" id="start_time" placeholder="ex. 4:40PM" autocomplete="off" />
+												<input class="form-control" action="search" type="text" name="start_time" id="start_time" placeholder="ex. 4:40pm" autocomplete="off" />
 											</div>
 										</div>
 									</div>
@@ -77,7 +79,7 @@
 										<div class="col-sm-12 form-group">
 											<label class="col-sm-12" for="end_time"><small>End Time</small></label>
 											<div class="col-sm-12">
-												<input class="form-control" action="search" type="text" required name="end_time" id="end_time" placeholder="ex. 5:30PM" autocomplete="off" />
+												<input class="form-control" action="search" type="text" name="end_time" id="end_time" placeholder="ex. 5:30pm" autocomplete="off" />
 											</div>
 										</div>
 									</div>
@@ -85,7 +87,7 @@
 										<div class="col-sm-12 form-group">
 											<label class="col-sm-12" for="location"><small>Location</small></label>
 											<div class="col-sm-12">
-												<input class="form-control" action="search" type="text" required name="location" id="location" placeholder="ex. Kenneth H Keller Hall" autocomplete="off" />
+												<input class="form-control" action="search" type="text" name="location" id="location" placeholder="ex. Kenneth H Keller Hall" autocomplete="off" />
 											</div>
 										</div>
 									</div>
@@ -109,7 +111,8 @@
 							</form>
 						</div>
 					</div>
-					<div class="col-md-8">
+					<% var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]; %>
+					<div class="col-md-9">
 						<table class="table" style="table-layout: fixed;">
 							<thead>
 								<tr>
@@ -122,9 +125,31 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td>
-										<%- user %>
-									</td>
+									<% for (var d = 0; d < 5; d += 1) { %>
+										<td>
+										<% for (var i = 0; i < user.classList.length; i++) { %>
+											<% var _class = user.classList[i]; if (_class.day == days[d]) { %>
+												<div class="well">
+													<b><%- _class.id %></b>
+													<br />
+													<small><i><%- _class.start_time %> - <%- _class.end_time %></i></small>
+													<br />
+													<%- _class.location %>
+													<% if (_class.members) { %>
+														<br />
+														<small><a href="#members<%- _class._id %>" data-toggle="collapse"><%- _class.members.length %> member<%- _class.members.length == 1 ? "" : "s" %></a></small>
+														<div id="members<%- _class._id %>" class="collapse alert alert-info">
+															<% for (var j=0; j<_class.members.length; j++) { %>
+																<% if (j != 0) { %><br /><% } %>
+																<a target="_blank" href="https://facebook.com/app_scoped_user_id/<%- _class.members[j].id %>" style="color:#FFF;"><%- _class.members[j].name %></a>
+															<% } %>
+														</div>
+													<% } %>
+												</div>
+											<% } %>
+										<% } %>
+										</td>
+									<% } %>
 								</tr>
 							</tbody>
 						</table>
@@ -133,7 +158,7 @@
 				<script type="text/javascript">
 					var documents;
 					function populate() {
-						$("#populate").html(documents.map(function(item) {
+						$("#populate").html("<option value=''>Create New Class</option>" + documents.map(function(item) {
 							return "<option value='" + item.id + "'>" + item.to_string + "</option>";
 						}).join(""));
 						$("#populate").selectpicker("refresh");
